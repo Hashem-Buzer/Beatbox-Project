@@ -13,8 +13,6 @@ var generalVideos = [
 	'<iframe width="600" height="300" src="https://www.youtube.com/embed/bjOcNXivsiA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
 ];
 
-
-
 var beatBoxers = [
 	{
 		name: 'D-low',
@@ -67,68 +65,80 @@ var beatBoxers = [
 	// 	image: ''
 	// },
 ];
+
 var challenges = [
 	{
+		id: 0,
 		name: 'Bass',
 		status: false,
 		level: 'basics',
 		tutorial: ''
 	},
 		{
+		id: 1,
 		name: 'Hi-Hat',
 		status: false,
 		level: 'basics',
 		tutorial: ''
 	},
 		{
+		id: 2,
 		name: 'Snare',
 		status: false,
 		level: 'basics',
 		tutorial: ''
 	},
 		{
+		id: 3,
 		name: 'Bass, Hi-Hat and Snare',
 		status: false,
 		level: 'basics',
 		tutorial: ''
 	},
 		{
+		id: 4,
 		name: 'Throat-Bass',
 		status: false,
 		level: 'pre-intermediate',
 		tutorial: ''
 	},
 		{
+		id: 5,
 		name: 'Vibration-Bass',
 		status: false,
 		level: 'pre-intermediate',
 		tutorial: ''
 	},
 		{
+		id: 6,
 		name: 'Lip Roll',
 		status: false,
 		level: 'pre-intermediate',
 		tutorial: ''
 	},
 		{
+		id: 7,
 		name: 'Lip Roll, Hi-Hat and Bass',
 		status: false,
 		level: 'Intermediate',
 		tutorial: ''
 	},
 		{
+		id: 8,
 		name: 'Inward-Bass',
 		status: false,
 		level: 'Intermediate',
 		tutorial: ''
 	},
 		{
+		id: 9,
 		name: 'Inward-Lip Roll',
 		status: false,
 		level: 'Advanced',
 		tutorial: ''
 	},
 		{
+		id: 10,
 		name: 'Tongue Bass',
 		status: false,
 		level: 'Advanced',
@@ -136,10 +146,6 @@ var challenges = [
 	},
 ];
 
-
-var newPage = function() {
-	$('#page').html('');
-}
 
 function display() {
 	return {
@@ -153,15 +159,49 @@ function display() {
 				$('<img class="bbImages">').appendTo('#beatboxers').attr('src', element.image);
 			})
 		},
+
 		challenges: function() {
 			$('#challenges').click(function() {
 				newPage();
-				$('<div id="challengesDiv"> </div>').appendTo('#page').append('<ul id="challengesList"> </ul>');
-				//refactor to foreach
-				challenges.forEach(function(element) {
-					$('#challengesList').append('<li class="challengesLi">' + element.name + ' ' + '(' + element.level + ')' + '</li>');
-				})
+				$('<div id="challengesDiv"> </div>')
+				.appendTo('#page');
+
+				//forEach
+				for (var i = 0; i < challenges.length; i++) {
+					$('#challengesDiv')
+					.append('<div class="challenge" value="' + i + '">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>')
+					};
+
+				$('.challenge').click(function() {
+					$(this).css('background-color', 'white').css('color', 'black');
+					var val = $(this).attr('value');
+					var num = parseInt(val);
+
+					challenges.forEach(function(element) {
+							if (num === element.id) {
+								element.status = true;
+							}
+						});
+					$(this).fadeOut(1000);
+					});
+				
 			});
+		},
+
+		done: function() {
+			$('#done').click(function() {
+				newPage();
+				$('#challengesDiv').html('');
+
+				$('<div id="doneDiv"> </div>')
+				.appendTo('#page');
+
+				for (var i = 0; i < challenges.length; i++) {
+					if (challenges[i].status === true) {
+						$('#doneDiv').append('<div class="done">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>');
+					}
+				}
+			})
 		}
 	}
 }
@@ -170,8 +210,10 @@ var display = display();
 $('#videos').html(display.videosDisplay());
 $('#beatboxers').append(display.beatBoxersDisplay());
 $('#challenges').html(display.challenges());
+$('#done').html(display.done());
 
 
-	$('.challengesLi').click(function() {
-		alert('hi this is challenge ')
-	})
+// FUNCTIONS 
+var newPage = function() {																		
+	$('#page').html('')																						
+}
