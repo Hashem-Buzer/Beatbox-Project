@@ -162,11 +162,17 @@ function display() {
 
 		challenges: function() {
 			$('#challenges').click(function() {
-				newPage();
+				$('#page').html('').slideUp(500);
 				$('<div id="challengesDiv"> </div>')
 				.appendTo('#page');
+				$('#page').slideDown(500);
+				$('#challengesDiv').append(
+					'<button class="buttons" id="basicsButton" onclick="buttons.basicsButton()"> BASICS </button>',
+					'<button class="buttons" id="pre-intermediateButton" onclick="buttons.preIntermediateButton()"> PRE-INTERMEDIATE </button>',
+					'<button class="buttons" id="intermediateButton" onclick="buttons.intermediateButton()"> INTERMEDIATE </button>',
+					'<button class="buttons" id="advancedButton" onclick="buttons.advancedButton()"> ADVANCED </button>');
 
-				//forEach
+				
 				for (var i = 0; i < challenges.length; i++) {
 					$('#challengesDiv')
 					.append('<div class="challenge" value="' + i + '">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>')
@@ -190,17 +196,19 @@ function display() {
 
 		done: function() {
 			$('#done').click(function() {
-				newPage();
-				$('#challengesDiv').html('');
+				
+				$('#challengesDiv').slideUp(500);
 
 				$('<div id="doneDiv"> </div>')
 				.appendTo('#page');
 
 				for (var i = 0; i < challenges.length; i++) {
 					if (challenges[i].status === true) {
-						$('#doneDiv').append('<div class="done">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>');
+						('#doneDiv')
+						.append('<div class="done">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>');
 					}
 				}
+				$('.done').slideDown(500)
 			})
 		}
 	}
@@ -212,8 +220,127 @@ $('#beatboxers').append(display.beatBoxersDisplay());
 $('#challenges').html(display.challenges());
 $('#done').html(display.done());
 
+var buttons = function() {
+	return {
+		basicsButton: function() {
+			$('#challengesDiv').slideUp().html('');
+				$('#challengesDiv').append(
+					'<button class="buttons" id="basicsButton" onclick="buttons.basicsButton()"> BASICS </button>',
+					'<button class="buttons" id="pre-intermediateButton" onclick="buttons.preIntermediateButton()"> PRE-INTERMEDIATE </button>',
+					'<button class="buttons" id="intermediateButton" onclick="buttons.intermediateButton()"> INTERMEDIATE </button>',
+					'<button class="buttons" id="advancedButton" onclick="buttons.advancedButton()"> ADVANCED </button>');
+			for (var i = 0; i < challenges.length; i++) {
+				if (challenges[i].level === 'basics') {
+				 $('#challengesDiv').append('<div class="challenge" value="' + i + '">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>')
+				}	
+			}
 
-// FUNCTIONS 
-var newPage = function() {																		
-	$('#page').html('')																						
+				$('.challenge').click(function() {
+					$(this).css('background-color', 'white').css('color', 'black');
+					var val = $(this).attr('value');
+					var num = parseInt(val);
+
+					challenges.forEach(function(element) {
+							if (num === element.id) {
+								element.status = true;
+							}
+						});
+					$(this).fadeOut(1000);
+					});
+			$('#challengesDiv').slideDown(500)
+		},
+		preIntermediateButton: function() {
+			$('#challengesDiv').slideUp().html('');
+				$('#challengesDiv').append(
+					'<button class="buttons" id="basicsButton" onclick="buttons.basicsButton()"> BASICS </button>',
+					'<button class="buttons" id="pre-intermediateButton" onclick="buttons.preIntermediateButton()"> PRE-INTERMEDIATE </button>',
+					'<button class="buttons" id="intermediateButton" onclick="buttons.intermediateButton()"> INTERMEDIATE </button>',
+					'<button class="buttons" id="advancedButton" onclick="buttons.advancedButton()"> ADVANCED </button>');
+			for (var i = 0; i < challenges.length; i++) {
+				if (challenges[i].level === 'pre-intermediate') {
+				 $('#challengesDiv').append('<div class="challenge" value="' + i + '">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>')
+				}	
+			}
+
+				$('.challenge').click(function() {
+					$(this).css('background-color', 'white').css('color', 'black');
+					var val = $(this).attr('value');
+					var num = parseInt(val);
+
+					challenges.forEach(function(element) {
+							if (num === element.id) {
+								element.status = true;
+							}
+						});
+					$(this).fadeOut(1000);
+					});
+			$('#challengesDiv').slideDown()
+		},
+		intermediateButton: function() {
+			$('#challengesDiv').html('').slideUp();
+				$('#challengesDiv').append(
+					'<button class="buttons" id="basicsButton" onclick="buttons.basicsButton()"> BASICS </button>',
+					'<button class="buttons" id="pre-intermediateButton" onclick="buttons.preIntermediateButton()"> PRE-INTERMEDIATE </button>',
+					'<button class="buttons" id="intermediateButton" onclick="buttons.intermediateButton()"> INTERMEDIATE </button>',
+					'<button class="buttons" id="advancedButton" onclick="buttons.advancedButton()"> ADVANCED </button>');
+			for (var i = 0; i < challenges.length; i++) {
+				if (challenges[i].level === 'Intermediate') {
+				 $('#challengesDiv').append('<div class="challenge" value="' + i + '">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>')
+				}	
+			}
+
+				$('.challenge').click(function() {
+					$(this).css('background-color', 'white').css('color', 'black');
+					var val = $(this).attr('value');
+					var num = parseInt(val);
+
+					challenges.forEach(function(element) {
+							if (num === element.id) {
+								element.status = true;
+							}
+						});
+					$(this).fadeOut(1000);
+					});
+			$('#challengesDiv').slideDown()
+		},
+		advancedButton: function() {
+			$('#challengesDiv').html('').slideUp();
+				$('#challengesDiv').append(
+					'<button class="buttons" id="basicsButton" onclick="buttons.basicsButton()"> BASICS </button>',
+					'<button class="buttons" id="pre-intermediateButton" onclick="buttons.preIntermediateButton()"> PRE-INTERMEDIATE </button>',
+					'<button class="buttons" id="intermediateButton" onclick="buttons.intermediateButton()"> INTERMEDIATE </button>',
+					'<button class="buttons" id="advancedButton" onclick="buttons.advancedButton()"> ADVANCED </button>');
+			for (var i = 0; i < challenges.length; i++) {
+				if (challenges[i].level === 'Advanced') {
+				 $('#challengesDiv').append('<div class="challenge" value="' + i + '">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>')
+				}	
+			}
+
+				$('.challenge').click(function() {
+					$(this).css('background-color', 'white').css('color', 'black');
+					var val = $(this).attr('value');
+					var num = parseInt(val);
+
+					challenges.forEach(function(element) {
+							if (num === element.id) {
+								element.status = true;
+							}
+						});
+					$(this).fadeOut(1000);
+					});
+			$('#challengesDiv').slideDown()
+		},
+
+	}
 }
+
+var buttons = buttons();
+buttons.basicsButton()
+buttons.preIntermediateButton();
+buttons.intermediateButton();
+buttons.advancedButton();
+
+// ()
+// ()
+// intermediateButton()
+// advancedButton()
