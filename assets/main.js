@@ -197,18 +197,18 @@ function display() {
 		done: function() {
 			$('#done').click(function() {
 				
-				$('#challengesDiv').slideUp(500);
+				$('#challengesDiv').slideUp(500).html('');
 
 				$('<div id="doneDiv"> </div>')
-				.appendTo('#page');
+				.appendTo('#challengesDiv');
 
 				for (var i = 0; i < challenges.length; i++) {
 					if (challenges[i].status === true) {
-						('#doneDiv')
+						$('#doneDiv')
 						.append('<div class="done">' + challenges[i].name + ' ' + '(' + challenges[i].level + ')' + '</div>');
 					}
 				}
-				$('.done').slideDown(500)
+				$('#challengesDiv').slideDown(500)
 			})
 		}
 	}
